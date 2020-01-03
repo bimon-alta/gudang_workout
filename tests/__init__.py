@@ -30,20 +30,20 @@ def client(request):
 #fungsi 'client' di atas tidak dipakai di dalam file ini, hanya bisa dipakai di file lain
 
 
-def create_token(isInternal=False):
+def create_token(isAdmin=False):
 
     #prepare request input, untuk sementara sesuaikan dgn data di db
     if isInternal:
-        cachename = 'test-internal-token'
+        cachename = 'test-admin-token'
         data = {
-            'client_key': 'internal',
-            'client_secret': 'asdf1234'
+            'user_name': 'admin',
+            'the_password': 'Asdf1234'
         }
     else:
-        cachename = 'test-noninternal-token'
+        cachename = 'test-nonadmin-token'
         data = {
-            'client_key': 'non internal',
-            'client_secret': 'asdf1234'
+            'user_name': 'Shopper1',
+            'the_password': 'User1234'
         }
         
 

@@ -48,6 +48,13 @@ class Products(db.Model):
         'deleted' : fields.Boolean
     }
 
+    #marshal utk view order list oleh merchant
+    order_list_field = {
+        'name' : fields.String,
+        'category_id' : fields.Integer,
+        'url_img1' : fields.String
+    }
+
     #MARSHAL INI HARUSNYA UTK HASIL JOIN, HANYA SAJA MASIH GAGAL
     # join_sale_fields = {
     #     'id' : fields.Integer,

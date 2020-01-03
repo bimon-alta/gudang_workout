@@ -26,6 +26,15 @@ class BankAccounts(db.Model):
         'deleted' : fields.Boolean
 
     }
+
+    payment_info_fields = {
+        'id' : fields.Integer,
+        'bank_name' : fields.String,
+        'account_name' : fields.String,
+        'account_no' : fields.String
+    }
+
+
     default="bank transfer"
     def __init__(self, bank_name, account_name, account_no):
         self.bank_name = bank_name

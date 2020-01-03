@@ -96,16 +96,12 @@ class UserResource(Resource):
 
         args = parser.parse_args()
 
-        print("password_changed = false")
-        
         if args['password_changed'] == True:
-            print("password_changed = true")
             validation = policy.test(args['new_password'])
             if validation == []:
                 user = Users.query.get(id)
                 password_digest = hashlib.md5(args['new_password'].encode()).hexdigest()
                 user.the_password = password_digest
-                # db.session.commit()
             else:
                 return {'message': 'password does not fill requirements', 'result': validation}, 400, {'Content Type':'application/json'}
 
@@ -151,14 +147,12 @@ class UserResource(Resource):
         user_profile = UserProfiles.query.filter_by(user_id=int(id)).first()
 
         if user_profile is None:
-            print("user_profile blm ada")
             user_profile = UserProfiles(user.id, full_name, sex, birth_place, birth_date, phone_no, address, city, province, bio, url_img)
             db.session.add(user_profile)
             db.session.commit()
 
             return marshal(user_profile, UserProfiles.response_fields), 200, {'Content Type':'application/json'}
         else:
-            print("user_profile sudah ada")
             user_profile = UserProfiles.query.filter_by(user_id=int(id)).first()
             user_profile.full_name = full_name
             user_profile.sex = sex

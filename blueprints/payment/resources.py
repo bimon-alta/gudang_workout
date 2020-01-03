@@ -7,6 +7,7 @@ import datetime
 from blueprints import db, app
 from .model import Payments
 from blueprints.sale.model import Sales
+from blueprints.bank_account.model import BankAccounts
 
 from flask_jwt_extended import jwt_required
 
@@ -41,6 +42,11 @@ class PaymentResource(Resource):
 
             db.session.commit()
 
+            result = {}
+            bank_info = BankAccounts.query.get(bank_account_id)
+            result['payment'] = marshal(payment, Payments.response_fields)
+            result['bank_info'] = marshal(bank_info, BankAccounts.payment_info_fields)
+
             return marshal(new_payment, Payments.response_fields), 200, {'Content Type':'application/json'}
         else:
             #cek expired time nya jika sudah lewat, maka buat lagi data baru dengan exp_time yg baru
@@ -70,7 +76,12 @@ class PaymentResource(Resource):
 
                 db.session.commit()
 
-                return marshal(new_payment, Payments.response_fields), 200, {'Content Type':'application/json'}
+                result = {}
+                bank_info = BankAccounts.query.get(bank_account_id)
+                result['payment'] = marshal(payment, Payments.response_fields)
+                result['bank_info'] = marshal(bank_info, BankAccounts.payment_info_fields)
+
+                return result, 200, {'Content Type':'application/json'}
             else:
                 parser = reqparse.RequestParser()
                 parser.add_argument('bank_account_id', location='json',required=True)
@@ -80,7 +91,12 @@ class PaymentResource(Resource):
                 payment.bank_account_id = bank_account_id
                 db.session.commit()
 
-                return marshal(payment, Payments.response_fields), 200, {'Content Type':'application/json'}
+                result = {}
+                bank_info = BankAccounts.query.get(bank_account_id)
+                result['payment'] = marshal(payment, Payments.response_fields)
+                result['bank_info'] = marshal(bank_info, BankAccounts.payment_info_fields)
+
+                return result, 200, {'Content Type':'application/json'}
 
 
 
@@ -102,7 +118,12 @@ class PaymentResource(Resource):
             sale.is_paid = True
             db.session.commit()
 
-            return marshal(payment, Payments.response_fields), 200, {'Content Type':'application/json'}
+            result = {}
+            bank_info = BankAccounts.query.get(payment.bank_account_id)
+            result['payment'] = marshal(payment, Payments.response_fields)
+            result['bank_info'] = marshal(bank_info, BankAccounts.payment_info_fields)
+
+            return result, 200, {'Content Type':'application/json'}
         
         return {'message': 'PAYMENT IS NOT FOUND'}, 404
 

@@ -7,6 +7,7 @@ from blueprints import db, app
 from .model import Sales
 from blueprints.sale_detail.model import SaleDetails
 from blueprints.user.model import Users
+from blueprints.product.model import Products
 
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_claims
@@ -26,18 +27,25 @@ class SaleResource(Resource):
         claims = get_jwt_claims()
         user = Users.query.filter_by(user_name=claims['user_name']).first()
         
-        cart = Sales.query.filter_by(user_id=user.id).first()
-        cart_items = SaleDetails.query.filter_by(sale_id=cart.id).all()
+        cart = Sales.query.filter_by(user_id=user.id).filter_by(is_paid=False).first()
+        result = {}
 
-        cart_item_list = []
-        if cart_items is not None:
-            for cart_item in cart_items:
-                cart_item_list.append(marshal(cart_items, SaleDetails.response_fields))
+        if cart != None:
+            cart_items = SaleDetails.query.filter_by(sale_id=cart.id).all()
 
-        result = {
-            'sale': marshal(cart, Sales.response_fields),
-            'sale_detail': cart_item_list
-        }
+            
+            if cart_items is not None:
+                cart_item_list = []
+                for cart_item in cart_items:
+                    sale_detail = {}
+                    product_info = Products.query.get(cart_item.product_id)
+                    sale_detail['item_sale'] = marshal(cart_item, SaleDetails.response_fields)
+                    sale_detail['item_info'] = marshal(product_info, Products.order_list_field)
+                    cart_item_list.append(sale_detail)
+
+                result['sale'] = marshal(cart, Sales.response_fields),
+                result['sale_detail'] = cart_item_list
+            
 
         return result, 200
 
@@ -64,7 +72,7 @@ class SaleResource(Resource):
         verify_jwt_in_request()
         claims = get_jwt_claims()
         user = Users.query.filter_by(user_name=claims['user_name']).first()
-        cart = Sales.query.filter_by(user_id=user.id).first()
+        cart = Sales.query.filter_by(user_id=user.id).filter_by(is_paid=False).first()
 
         if cart is None:
             new_cart = Sales(user.id, total, False)
@@ -79,7 +87,6 @@ class SaleResource(Resource):
             return marshal(new_item, SaleDetails.response_fields), 200, {'Content Type':'application/json'}
 
         else:
-            cart = Sales.query.filter_by(user_id=user.id).first()
             item = SaleDetails.query.filter_by(product_id=product_id).first()
             if item is None:
                 new_item = SaleDetails(cart.id, product_id, qty, price_on_sale, discount_amount, 0, total,False)

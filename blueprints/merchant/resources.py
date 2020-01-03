@@ -322,14 +322,15 @@ class MerchantOrderList(Resource):
         # sale_details = db.session.query(Sales.is_paid,Sales.id, SaleDetails.id).join(SaleDetails).group_by(Products.id).filter(SaleDetails.is_shipped==False).filter(SaleDetails.product_id.in_(product_id_list))
         sale_details = SaleDetails.query.filter_by(is_shipped=False).filter(SaleDetails.product_id.in_(product_id_list)).order_by(SaleDetails.id).all()
        
-
-        sale_detail_list = []
+        result = []
         for sale_detail in sale_details:
-            sale_detail_list.append(marshal(sale_detail, SaleDetails.response_fields))
+            item_list = {}
+            product_info = Products.query.get(sale_detail.product_id)
+            item_list['item_sale'] = marshal(sale_detail, SaleDetails.response_fields)
+            item_list['item_info'] =  marshal(product_info, Products.order_list_field)
+            result.append(item_list)
 
-        
-
-        return sale_detail_list, 200
+        return result, 200
 
 api.add_resource(MerchantNew, '')
 api.add_resource(MerchantResource, '/<id>')   
