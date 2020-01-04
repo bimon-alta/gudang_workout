@@ -34,8 +34,6 @@ class BankAccounts(db.Model):
         'account_no' : fields.String
     }
 
-
-    default="bank transfer"
     def __init__(self, bank_name, account_name, account_no):
         self.bank_name = bank_name
         self.account_name = account_name

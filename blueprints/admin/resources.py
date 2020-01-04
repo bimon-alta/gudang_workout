@@ -73,12 +73,15 @@ class ProductCategoryNew(Resource):
         args = parser.parse_args()
 
         name = args['name']
-        
-        new_category = ProductCategories(name)
-        db.session.add(new_category)
-        db.session.commit()
+        category_is_exist = ProductCategories.query.filter(ProductCategories.name.lower() == name.lower())
+        if category_is_exist is None:
+            new_category = ProductCategories(name)
+            db.session.add(new_category)
+            db.session.commit()
 
-        return marshal(new_category, ProductCategories.response_fields), 200, {'Content Type':'application/json'}
+            return marshal(new_category, ProductCategories.response_fields), 200, {'Content Type':'application/json'}
+        else:
+            return {'message': 'Product Category is exist', 'result': validation}, 400, {'Content Type':'application/json'}
 
 
 class ProductCategoryResource(Resource):
@@ -95,7 +98,7 @@ class ProductCategoryResource(Resource):
         if product_category is not None:
             return marshal(product_category, ProductCategories.response_fields), 200
         else:
-            return {'status': 'NOT FOUND'}, 404
+            return {'status': 'CATEGORY NOT FOUND'}, 404
 
 
     @jwt_required
@@ -106,26 +109,33 @@ class ProductCategoryResource(Resource):
         parser.add_argument('name', location='json',required=True)        
         args = parser.parse_args()
 
+        category_is_exist = ProductCategories.query.filter(ProductCategories.id != id).filter(ProductCategories.name.lower() == name.lower())
+        if category_is_exist is None:
+            category = ProductCategories.query.get(id)
+            category.name = args['name']
+            db.session.commit()
 
-        category = ProductCategories.query.get(id)
-        category.name = args['name']
-        db.session.commit()
-
-        return marshal(category, ProductCategories.response_fields), 200, {'Content Type':'application/json'}
+            return marshal(category, ProductCategories.response_fields), 200, {'Content Type':'application/json'}
+        else:
+            return {'message': 'Product Category is exist', 'result': validation}, 400, {'Content Type':'application/json'}
 
     @jwt_required
     @admin_required
     def delete(self, id):
         products = Products.query.filter_by(category_id=id).all()
-        for product in products:
-            products.deleted = True
+        if products is not None:
+            for product in products:
+                products.deleted = True
 
-        category = ProductCategories.query.get(id)
-        category.deleted = True
-        
-        db.session.commit()
-        
-        return {'message': 'Deleted'}, 200
+            category = ProductCategories.query.get(id)
+            category.deleted = True
+            
+            db.session.commit()
+            
+            return {'message': 'Deleted'}, 200
+        else:
+            return {'status': 'CATEGORY NOT FOUND'}, 404
+
 
 class BankAccountList(Resource):
     def __init__(self):
@@ -158,8 +168,6 @@ class BankAccountList(Resource):
             if args['orderby'] == 'created_at':
                 if args['sort'] == 'desc':
                     qry = qry.order_by(desc(BankAccounts.created_at))
-                else:
-                    qry = qry.order_by(BankAccounts.created_at)
 
         rows = []
         for row in qry.limit(int(args['rp'])).offset(indeks_mulai).all():
@@ -176,7 +184,7 @@ class BankAccountNew(Resource):
     @jwt_required
     @admin_required
     def post(self):        
-
+        
         parser = reqparse.RequestParser()
         parser.add_argument('bank_name', location='json',required=True)    
         parser.add_argument('account_name', location='json',required=True)        
@@ -186,13 +194,16 @@ class BankAccountNew(Resource):
         bank_name = args['bank_name']
         account_name = args['account_name']
         account_no = args['account_no']
-        
-        new_bank_account = BankAccounts(bank_name, account_name, account_no)
-        db.session.add(new_bank_account)
-        db.session.commit()
 
-        return marshal(new_bank_account, BankAccounts.response_fields), 200, {'Content Type':'application/json'}
+        bank_acc_is_exist = BankAccounts.query.filter(BankAccounts.bank_name.lower() == bank_name.lower())
+        if bank_acc_is_exist is None:    
+            new_bank_account = BankAccounts(bank_name, account_name, account_no)
+            db.session.add(new_bank_account)
+            db.session.commit()
 
+            return marshal(new_bank_account, BankAccounts.response_fields), 200, {'Content Type':'application/json'}
+        else:
+            return {'message': 'Bank Account is exist', 'result': validation}, 400, {'Content Type':'application/json'}
 
 
 class BankAccountResource(Resource):
@@ -209,7 +220,7 @@ class BankAccountResource(Resource):
         if bank_account is not None:
             return marshal(bank_account, BankAccounts.response_fields), 200
         else:
-            return {'status': 'NOT FOUND'}, 404
+            return {'status': 'BANK ACCOUNT NOT FOUND'}, 404
 
     @jwt_required
     @admin_required
@@ -221,26 +232,34 @@ class BankAccountResource(Resource):
         parser.add_argument('account_no', location='json',required=True)    
         args = parser.parse_args()
 
+        bank_acc_is_exist = BankAccounts.query.filter(ProductCategories.id != id).filter(BankAccounts.bank_name.lower() == args['bank_name'].lower())
+        if bank_acc_is_exist is None: 
+            bank_account = BankAccounts.query.get(id)
+            bank_account.bank_name = args['bank_name']
+            bank_account.account_name = args['account_name']
+            bank_account.account_no = args['account_no']
 
-        bank_account = BankAccounts.query.get(id)
-        bank_account.bank_name = args['bank_name']
-        bank_account.account_name = args['account_name']
-        bank_account.account_no = args['account_no']
+            db.session.commit()
 
-        db.session.commit()
+            return marshal(bank_account, BankAccounts.response_fields), 200, {'Content Type':'application/json'}
+        else:
+            return {'message': 'Bank Account is exist', 'result': validation}, 400, {'Content Type':'application/json'}
 
-        return marshal(bank_account, BankAccounts.response_fields), 200, {'Content Type':'application/json'}
 
     @jwt_required
     @admin_required
     def delete(self, id):
 
         bank_account = BankAccounts.query.get(id)
-        bank_account.deleted = True
-        
-        db.session.commit()
-        
-        return {'message': 'Deleted'}, 200
+        if bank_account != None:
+            bank_account.deleted = True
+            
+            db.session.commit()
+            
+            return {'message': 'Deleted'}, 200
+        else:
+            return {'status': 'BANK ACCOUNT NOT FOUND'}, 404
+
 
 api.add_resource(ProductCategoryList,'','/category')
 api.add_resource(ProductCategoryNew,'','/category/new')

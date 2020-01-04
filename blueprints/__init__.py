@@ -44,17 +44,17 @@ app.config['APP_DEBUG'] = True
 ##################################
 
 #sqlalchemy config
-# try:
-#     env = os.environ.get('FLASK_ENV', 'development')
-#     if env == 'testing':
-#         app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db_testing'
-#     else:
-#         app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db'
+try:
+    env = os.environ.get('FLASK_ENV', 'development')
+    if env == 'testing':
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db_testing'
+    else:
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db_real'
 
-# except Exception as e:
-#     raise e
+except Exception as e:
+    raise e
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 

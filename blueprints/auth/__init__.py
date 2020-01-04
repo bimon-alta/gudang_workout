@@ -40,12 +40,6 @@ class CreateTokenResource(Resource):
             return {'status': 'UNATUTHORIZED', 'message': 'invalid username or password'}, 401
 
 
-    # @jwt_required
-    # def get(self):
-    #     claims = get_jwt_claims()
-    #     return {'claims': claims}, 200
-
-
 class RefreshTokenResource(Resource):
     @jwt_required
     def post(self):

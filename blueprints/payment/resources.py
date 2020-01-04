@@ -20,6 +20,10 @@ class PaymentResource(Resource):
 
     @jwt_required
     def post(self, sale_id):
+        #LAKUKAN PENGECEKAN UTK MEMASTIKAN DATA ORDERAN LENGKAP
+        #SEMENTARA BELUM DIBUAT, NUNGGU DARI FRONT END PERILAKUNYA SPT APA
+        #SALAH SATUNYA CEK APAKAH SEMUA SALE_DETAIL SUDAH DIINPUT ALAMAT PENGIRIMAN
+        #APAKAH TERJADI UPDATE SALE_DETAILS (QTY, DISKON, ONGKIR DLL)
 
         payment = Payments.query.filter_by(sale_id=sale_id).first()
 

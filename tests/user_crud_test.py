@@ -1,124 +1,184 @@
 import json
-from . import reset_db, app, client,  create_token
+from . import reset_db, app, client,  test_login_admin, test_login_penjual, test_login_pembeli
 
 
 
 class TestUserCrud():
 
     idUser = 0
-    # reset_db()
+    reset_db()
 
-    def test_user_insert_internal(self, client):
-        token = create_token(True)
+    def test_user_signup_regular_user(self, client):
 
         data = {
-            "name" : "John Constantine3",
-            "age" : 20,
-            "sex": "male",
-            "client_id" : 1
+            "user_name" : "paijo123",
+            "email" : "paijo@gmail..com",
+            "the_password": "Paijo1234"
         }
 
-        res = client.post('/user', json=data, headers={'Authorization': 'Bearer '+ token})
+        res = client.post('/user', json=data)
 
         res_json = json.loads(res.data)
 
-        #output dari test (ukuran keberhasilan pengetesan)
-        assert res.status_code == 200   #hanya jika mengembalikan status code 200 dan id > 0, dianggap ok 
-        # assert res_json['id'] > 0       
-
-        #jika mau mengetest juga apakah metode validasi 'client_secret' sukses
-        # assert res_json['client_secret'] == hashlib.md5(args['client_secret'].encode()).hexdigest()
+        assert res.status_code == 200   
 
         self.idUser = res_json['id']
 
 
-
-
-
-    # def test_user_insert_noninternal(self, client):
-    #     token = create_token()
-
-    #     data = {
-    #         "name" : "Bimon1",
-    #         "age" : 20,
-    #         "sex": "male",
-    #         "client_id" : 1
-    #     }
-
-
-    #     res = client.post('/user', json=data, headers={'Authorization': 'Bearer '+ token})
-
-    #     res_json = json.loads(res.data)
-    #     assert res.status_code == 403
-    #     # assert res_json['validate'][0] == 'at least 1 uppercase'  #ini validasi password, tidak dipakai
-
-
-    #     # self.idUser = res_json['id']
-
-    
-
-    def test_user_list_internal(self, client):
-        token = create_token(True)
-        res = client.get('/user/list', headers={'Authorization': 'Bearer '+ token})
-
-        res_json = json.loads(res.data)
-        assert res.status_code == 200
-    
-    # def test_user_list_noninternal(self, client):
-    #     token = create_token()
-    #     res = client.get('/user/list', headers={'Authorization': 'Bearer '+ token})
-
-    #     res_json = json.loads(res.data)
-    #     assert res.status_code == 500
-
-    # def test_user_list_without_token(self, client):
-    #     token = create_token()
-    #     data = {
-    #         "p" : 1,
-    #         "rp" : 20,
-    #         "name": "Bimon",
-    #         "ordery": "age",
-    #         "sort" : "desc"
-    #     }
-
-    #     res = client.get('/user/list', query_string=data, headers={'Authorization': 'Bearer '})
-
-    #     res_json = json.loads(res.data)
-    #     assert res.status_code == 500
-
-    def test_user_update_internal(self, client):
-        token = create_token(True)
+    def test_user_signup_regular_user_invalid_password(self, client):
 
         data = {
-            "name" : "Christine",
-            "age" : 18,
-            "sex": "female",
-            "client_id" : 2
+            "user_name" : "paijo1234",
+            "email" : "paijoker@gmail.com",
+            "the_password": "rahasia"
         }
 
+        res = client.post('/user', json=data)
 
-        res = client.put('/user/2', json=data, headers={'Authorization': 'Bearer '+ token})
+        res_json = json.loads(res.data)
+
+        assert res.status_code == 400   
+        assert res_json['message'] == 'password does not fill requirements'
+        
+
+    def test_user_signup_username_email_exist(self, client):
+
+        data = {
+            "user_name" : "admin",
+            "email" : "paijo@gmail..com",
+            "the_password": "Paijo1234"
+        }
+
+        res = client.post('/user', json=data)
+
+        res_json = json.loads(res.data)
+
+        assert res.status_code == 400   
+        assert res_json['message'] == 'Username or Email already registered'
+        
+
+    def test_insert_new_user_profile_ganti_password_valid(self, client):
+        token = test_login_admin()
+        
+        data = {
+            "full_name" : "Saya adalah admin 1",
+            "sex" : "male",
+            "birth_place": "Semarang",
+            "birth_date" : "1990-12-31",
+            "phone_no" : "0361-798766",
+            "address": "Jl. Merpati 23B",
+            "city" : "Denpasar",
+            "province" : "Bali",
+            "bio": "Ini hanya sebuah user test",
+            "url_img" : "https://cdn4.buysellads.net/uu/1/57095/1576856708-ad10.png",
+            "password_changed" : True,
+            "new_password": "NewPass1234"
+        }
+
+        res = client.put('/user/1', json=data,  headers={'Authorization': 'Bearer '+ token})
 
         res_json = json.loads(res.data)
         assert res.status_code == 200
     
-    def test_user_delete_internal(self, client):
-        token = create_token(True)
 
-        res = client.delete('/user/2', headers={'Authorization': 'Bearer '+ token})
+    def test_insert_new_user_profile_ganti_password_invalid(self, client):
+        token = test_login_admin()
+        
+        data = {
+            "full_name" : "Saya adalah admin 1",
+            "sex" : "male",
+            "birth_place": "Semarang",
+            "birth_date" : "1990-12-31",
+            "phone_no" : "0361-798766",
+            "address": "Jl. Merpati 23B",
+            "city" : "Denpasar",
+            "province" : "Bali",
+            "bio": "Ini hanya sebuah user test",
+            "url_img" : "https://cdn4.buysellads.net/uu/1/57095/1576856708-ad10.png",
+            "password_changed" : True,
+            "new_password": "rahasia"
+        }
+
+        res = client.put('/user/1', json=data,  headers={'Authorization': 'Bearer '+ token})
+
+        res_json = json.loads(res.data)
+        assert res.status_code == 400   
+        assert res_json['message'] == 'password does not fill requirements'
+
+
+    def test_update_user_profile_full(self, client):
+        token = test_login_admin()
+        
+        data = {
+            "full_name" : "Saya adalah admin 1",
+            "sex" : "male",
+            "birth_place": "Semarang",
+            "birth_date" : "1990-12-31",
+            "phone_no" : "0361-798766",
+            "address": "Jl. Merpati 23B",
+            "city" : "Denpasar",
+            "province" : "Bali",
+            "bio": "Ini hanya sebuah user test",
+            "url_img" : "https://cdn4.buysellads.net/uu/1/57095/1576856708-ad10.png",
+            "password_changed" : True,
+            "new_password": "NewPass1234"
+        }
+
+        res = client.put('/user/1', json=data,  headers={'Authorization': 'Bearer '+ token})
 
         res_json = json.loads(res.data)
         assert res.status_code == 200
-        assert res_json['message'] == 'Deleted'
 
+    def test_update_user_profile_some_params_empty(self, client):
+        token = test_login_admin()
+        
+        data = {
+            "full_name" : "Saya adalah admin 1",
+            "sex" : "male",
+            "birth_date" : "1990-12-31",
+            "phone_no" : "0361-798766",
+            "password_changed" : False            
+        }
 
-    def test_user_get_id_internal(self, client):
-        token = create_token(True)
+        res = client.put('/user/1', json=data,  headers={'Authorization': 'Bearer '+ token})
 
+        res_json = json.loads(res.data)
+        assert res.status_code == 200
+
+    def test_update_user_profile_token_invalid(self, client):
+        token = test_login_admin()
+        
+        data = {
+            "full_name" : "Saya adalah admin 1",
+            "sex" : "male",
+            "birth_date" : "1990-12-31",
+            "phone_no" : "0361-798766",
+            "password_changed" : False            
+        }
+
+        res = client.put('/user/2', json=data,  headers={'Authorization': 'Bearer '+ token})
+
+        res_json = json.loads(res.data)
+        assert res.status_code == 400
+        assert res_json['message'] == 'Trying to Access/Update data by Unauthorized user'
+    
+
+    def test_get_user_by_id_token_valid(self, client):
+        token = test_login_admin()
+        
         res = client.get('/user/2', headers={'Authorization': 'Bearer '+ token})
 
         res_json = json.loads(res.data)
         assert res.status_code == 200
+
+    def test_get_user_by_id_token_invalid(self, client):
+        token = test_login_admin()
+
+        res = client.get('/user/2', headers={'Authorization': 'Bearer '+ token})
+
+        res_json = json.loads(res.data)
+        assert res.status_code == 400
+        assert res_json['message'] == 'Trying to Access/Update data by Unauthorized user'
+
     
-
-
+        
