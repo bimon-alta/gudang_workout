@@ -1,0 +1,114 @@
+[2020-01-02 18:01:26,337] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 581, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/cursors.py", line 328, in _query
+    conn.query(q)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 732, in _read_query_result
+    result.read()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+pymysql.err.InternalError: (1055, "Expression #3 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'gudang_workout_db.sale_details.qty' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 58, in get
+    product_sales = db.session.query(Products.id,Products.name, SaleDetails.qty, SaleDetails.total).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id).all()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3211, in all
+    return list(self)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3367, in __iter__
+    return self._execute_and_instances(context)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 3392, in _execute_and_instances
+    result = conn.execute(querycontext.statement, self._params)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 982, in execute
+    return meth(self, multiparams, params)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1101, in _execute_clauseelement
+    distilled_params,
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1250, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1476, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 398, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/util/compat.py", line 152, in reraise
+    raise value.with_traceback(tb)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/base.py", line 1246, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/engine/default.py", line 581, in do_execute
+    cursor.execute(statement, parameters)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/cursors.py", line 170, in execute
+    result = self._query(query)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/cursors.py", line 328, in _query
+    conn.query(q)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 517, in query
+    self._affected_rows = self._read_query_result(unbuffered=unbuffered)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 732, in _read_query_result
+    result.read()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 1075, in read
+    first_packet = self.connection._read_packet()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/connections.py", line 684, in _read_packet
+    packet.check_error()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/protocol.py", line 220, in check_error
+    err.raise_mysql_exception(self._data)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/pymysql/err.py", line 109, in raise_mysql_exception
+    raise errorclass(errno, errval)
+sqlalchemy.exc.InternalError: (pymysql.err.InternalError) (1055, "Expression #3 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'gudang_workout_db.sale_details.qty' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by")
+[SQL: SELECT products.id AS products_id, products.name AS products_name, sale_details.qty AS sale_details_qty, sale_details.total AS sale_details_total 
+FROM products INNER JOIN sale_details ON products.id = sale_details.product_id 
+WHERE products.deleted = false GROUP BY products.id]
+(Background on this error at: http://sqlalche.me/e/2j85)
+[2020-01-02 18:03:39,353] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 93, in get
+    for row in products.limit(int(args['rp'])).offset(indeks_mulai).all():
+UnboundLocalError: local variable 'products' referenced before assignment
+[2020-01-02 18:04:41,262] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 58, in get
+    product_sales = db.session.query(Products.id,Products.name, int(func.sum(SaleDetails.qty)).label('total_sold_qty')).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id).all()
+TypeError: int() argument must be a string, a bytes-like object or a number, not 'sum'

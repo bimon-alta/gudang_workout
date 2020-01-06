@@ -87,7 +87,7 @@ class SaleResource(Resource):
             return marshal(new_item, SaleDetails.response_fields), 200, {'Content Type':'application/json'}
 
         else:
-            item = SaleDetails.query.filter_by(product_id=product_id).first()
+            item = SaleDetails.query.filter_by(sale_id=cart.id).filter_by(product_id=product_id).first()
             if item is None:
                 new_item = SaleDetails(cart.id, product_id, qty, price_on_sale, discount_amount, 0, total,False)
                 db.session.add(new_item)

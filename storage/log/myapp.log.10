@@ -1,0 +1,71 @@
+[2020-01-02 17:57:35,394] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 93, in get
+    for row in products.limit(int(args['rp'])).offset(indeks_mulai).all():
+UnboundLocalError: local variable 'products' referenced before assignment
+[2020-01-02 17:58:29,881] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 93, in get
+    for row in products.limit(int(args['rp'])).offset(indeks_mulai).all():
+UnboundLocalError: local variable 'products' referenced before assignment
+[2020-01-02 17:59:13,545] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 58, in get
+    product_sales = db.session.query(Products.id,Products.name).filter(Products.deleted==False).join(SaleDetails, SaleDetails.qty, SaleDetails.total).all()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 2268, in join
+    from_joinpoint=from_joinpoint,
+  File "<string>", line 2, in _join
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/base.py", line 220, in generate
+    fn(self, *args[1:], **kw)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 2401, in _join
+    right = onclause.property.entity
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 949, in __getattr__
+    return self._fallback_getattr(key)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 923, in _fallback_getattr
+    raise AttributeError(key)
+AttributeError: entity
+[2020-01-02 17:59:44,985] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 93, in get
+    for row in products.limit(int(args['rp'])).offset(indeks_mulai).all():
+UnboundLocalError: local variable 'products' referenced before assignment

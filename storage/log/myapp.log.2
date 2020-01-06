@@ -1,0 +1,118 @@
+[2020-01-04 12:14:51,720] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /merchant/product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 107, in wrapper
+    verify_jwt_in_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
+    jwt_data, jwt_header = _decode_jwt_from_request(request_type='access')
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 294, in _decode_jwt_from_request
+    decoded_token = decode_token(encoded_token, csrf_token)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 118, in decode_token
+    allow_expired=allow_expired
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/tokens.py", line 140, in decode_jwt
+    leeway=leeway, options=options, issuer=issuer)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/jwt/api_jwt.py", line 104, in decode
+    self._validate_claims(payload, merged_options, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/jwt/api_jwt.py", line 134, in _validate_claims
+    self._validate_exp(payload, now, leeway)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/jwt/api_jwt.py", line 175, in _validate_exp
+    raise ExpiredSignatureError('Signature has expired')
+jwt.exceptions.ExpiredSignatureError: Signature has expired
+[2020-01-05 11:00:40,873] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /admin/bank-account/new [POST]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 717, in __getattr__
+    return getattr(self.comparator, key)
+AttributeError: 'Comparator' object has no attribute 'lower'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/attributes.py", line 227, in __getattr__
+    return getattr(self.comparator, key)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 949, in __getattr__
+    return self._fallback_getattr(key)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/properties.py", line 312, in _fallback_getattr
+    return getattr(self.__clause_element__(), key)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 721, in __getattr__
+    % (type(self).__name__, type(self.comparator).__name__, key)
+AttributeError: Neither 'AnnotatedColumn' object nor 'Comparator' object has an attribute 'lower'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 108, in wrapper
+    return fn(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/__init__.py", line 32, in wrapper
+    return fn(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/admin/resources.py", line 198, in post
+    bank_acc_is_exist = BankAccounts.query.filter(BankAccounts.bank_name.lower() == bank_name.lower())
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/attributes.py", line 236, in __getattr__
+    key,
+AttributeError: Neither 'InstrumentedAttribute' object nor 'Comparator' object associated with BankAccounts.bank_name has an attribute 'lower'
+[2020-01-05 11:24:28,079] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /admin/bank-account/new [POST]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 107, in wrapper
+    verify_jwt_in_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 32, in verify_jwt_in_request
+    jwt_data, jwt_header = _decode_jwt_from_request(request_type='access')
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 294, in _decode_jwt_from_request
+    decoded_token = decode_token(encoded_token, csrf_token)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/utils.py", line 118, in decode_token
+    allow_expired=allow_expired
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/tokens.py", line 140, in decode_jwt
+    leeway=leeway, options=options, issuer=issuer)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/jwt/api_jwt.py", line 104, in decode
+    self._validate_claims(payload, merged_options, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/jwt/api_jwt.py", line 134, in _validate_claims
+    self._validate_exp(payload, now, leeway)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/jwt/api_jwt.py", line 175, in _validate_exp
+    raise ExpiredSignatureError('Signature has expired')
+jwt.exceptions.ExpiredSignatureError: Signature has expired
+[2020-01-05 11:24:52,369] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /admin/bank-account/new [POST]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 108, in wrapper
+    return fn(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/__init__.py", line 32, in wrapper
+    return fn(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/admin/resources.py", line 198, in post
+    bank_acc_is_exist = BankAccounts.query.filter(func.lower(BankAccounts.bank_name) == bank_name.lower())
+NameError: name 'func' is not defined

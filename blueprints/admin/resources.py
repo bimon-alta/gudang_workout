@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_restful import Api, reqparse, Resource, marshal, inputs
-from sqlalchemy import desc
+from sqlalchemy import desc, func
 import datetime, hashlib
 
 
@@ -50,8 +50,7 @@ class ProductCategoryList(Resource):
             if args['orderby'] == 'created_at':
                 if args['sort'] == 'desc':
                     qry = qry.order_by(desc(ProductCategories.created_at))
-                else:
-                    qry = qry.order_by(ProductCategories.created_at)
+                
 
         rows = []
         for row in qry.limit(int(args['rp'])).offset(indeks_mulai).all():
@@ -73,7 +72,7 @@ class ProductCategoryNew(Resource):
         args = parser.parse_args()
 
         name = args['name']
-        category_is_exist = ProductCategories.query.filter(ProductCategories.name.lower() == name.lower())
+        category_is_exist = ProductCategories.query.filter(func.lower(ProductCategories.name) == name.lower()).first()
         if category_is_exist is None:
             new_category = ProductCategories(name)
             db.session.add(new_category)
@@ -81,7 +80,7 @@ class ProductCategoryNew(Resource):
 
             return marshal(new_category, ProductCategories.response_fields), 200, {'Content Type':'application/json'}
         else:
-            return {'message': 'Product Category is exist', 'result': validation}, 400, {'Content Type':'application/json'}
+            return {'message': 'Product Category is exist'}, 400, {'Content Type':'application/json'}
 
 
 class ProductCategoryResource(Resource):
@@ -98,7 +97,7 @@ class ProductCategoryResource(Resource):
         if product_category is not None:
             return marshal(product_category, ProductCategories.response_fields), 200
         else:
-            return {'status': 'CATEGORY NOT FOUND'}, 404
+            return {'message': 'CATEGORY NOT FOUND'}, 404
 
 
     @jwt_required
@@ -108,33 +107,35 @@ class ProductCategoryResource(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('name', location='json',required=True)        
         args = parser.parse_args()
+        name = args['name']
 
-        category_is_exist = ProductCategories.query.filter(ProductCategories.id != id).filter(ProductCategories.name.lower() == name.lower())
+        category_is_exist = ProductCategories.query.filter(ProductCategories.id != id).filter(func.lower(ProductCategories.name) == name.lower()).first()
         if category_is_exist is None:
             category = ProductCategories.query.get(id)
-            category.name = args['name']
+            category.name = name
             db.session.commit()
 
             return marshal(category, ProductCategories.response_fields), 200, {'Content Type':'application/json'}
         else:
-            return {'message': 'Product Category is exist', 'result': validation}, 400, {'Content Type':'application/json'}
+            return {'message': 'Product Category is exist'}, 400, {'Content Type':'application/json'}
 
     @jwt_required
     @admin_required
     def delete(self, id):
-        products = Products.query.filter_by(category_id=id).all()
-        if products is not None:
+        product_category = ProductCategories.query.get(id)
+        if product_category is not None:
+            products = Products.query.filter_by(category_id=id).all()
             for product in products:
                 products.deleted = True
 
-            category = ProductCategories.query.get(id)
-            category.deleted = True
+            
+            product_category.deleted = True
             
             db.session.commit()
             
             return {'message': 'Deleted'}, 200
         else:
-            return {'status': 'CATEGORY NOT FOUND'}, 404
+            return {'message': 'CATEGORY NOT FOUND'}, 404
 
 
 class BankAccountList(Resource):
@@ -195,7 +196,8 @@ class BankAccountNew(Resource):
         account_name = args['account_name']
         account_no = args['account_no']
 
-        bank_acc_is_exist = BankAccounts.query.filter(BankAccounts.bank_name.lower() == bank_name.lower())
+        bank_acc_is_exist = BankAccounts.query.filter(func.lower(BankAccounts.bank_name) == bank_name.lower()).first()
+        # print(bank_acc_is_exist)
         if bank_acc_is_exist is None:    
             new_bank_account = BankAccounts(bank_name, account_name, account_no)
             db.session.add(new_bank_account)
@@ -203,7 +205,7 @@ class BankAccountNew(Resource):
 
             return marshal(new_bank_account, BankAccounts.response_fields), 200, {'Content Type':'application/json'}
         else:
-            return {'message': 'Bank Account is exist', 'result': validation}, 400, {'Content Type':'application/json'}
+            return {'message': 'Bank Account is exist'}, 400, {'Content Type':'application/json'}
 
 
 class BankAccountResource(Resource):
@@ -220,7 +222,7 @@ class BankAccountResource(Resource):
         if bank_account is not None:
             return marshal(bank_account, BankAccounts.response_fields), 200
         else:
-            return {'status': 'BANK ACCOUNT NOT FOUND'}, 404
+            return {'message': 'BANK ACCOUNT NOT FOUND'}, 404
 
     @jwt_required
     @admin_required
@@ -232,7 +234,7 @@ class BankAccountResource(Resource):
         parser.add_argument('account_no', location='json',required=True)    
         args = parser.parse_args()
 
-        bank_acc_is_exist = BankAccounts.query.filter(ProductCategories.id != id).filter(BankAccounts.bank_name.lower() == args['bank_name'].lower())
+        bank_acc_is_exist = BankAccounts.query.filter(BankAccounts.id != id).filter(func.lower(BankAccounts.bank_name) == args['bank_name'].lower()).first()
         if bank_acc_is_exist is None: 
             bank_account = BankAccounts.query.get(id)
             bank_account.bank_name = args['bank_name']
@@ -243,7 +245,7 @@ class BankAccountResource(Resource):
 
             return marshal(bank_account, BankAccounts.response_fields), 200, {'Content Type':'application/json'}
         else:
-            return {'message': 'Bank Account is exist', 'result': validation}, 400, {'Content Type':'application/json'}
+            return {'message': 'Bank Account is exist'}, 400, {'Content Type':'application/json'}
 
 
     @jwt_required
@@ -258,7 +260,7 @@ class BankAccountResource(Resource):
             
             return {'message': 'Deleted'}, 200
         else:
-            return {'status': 'BANK ACCOUNT NOT FOUND'}, 404
+            return {'message': 'BANK ACCOUNT NOT FOUND'}, 404
 
 
 api.add_resource(ProductCategoryList,'','/category')

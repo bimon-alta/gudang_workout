@@ -49,7 +49,7 @@ try:
     if env == 'testing':
         app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db_testing'
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db_real'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db'
 
 except Exception as e:
     raise e

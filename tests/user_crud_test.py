@@ -166,7 +166,7 @@ class TestUserCrud():
     def test_get_user_by_id_token_valid(self, client):
         token = test_login_admin()
         
-        res = client.get('/user/2', headers={'Authorization': 'Bearer '+ token})
+        res = client.get('/user/1', headers={'Authorization': 'Bearer '+ token})
 
         res_json = json.loads(res.data)
         assert res.status_code == 200

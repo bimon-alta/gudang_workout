@@ -1,0 +1,120 @@
+[2020-01-02 19:18:20,352] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 717, in __getattr__
+    return getattr(self.comparator, key)
+AttributeError: 'Comparator' object has no attribute 'int'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 38, in get
+    product_sales = db.session.query(Products.id,Products.name, func.sum(SaleDetails.qty).label('total_sold_qty').int()).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/sql/elements.py", line 721, in __getattr__
+    % (type(self).__name__, type(self.comparator).__name__, key)
+AttributeError: Neither 'Label' object nor 'Comparator' object has an attribute 'int'
+[2020-01-02 19:33:04,762] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 462, in wrapper
+    return self.make_response(data, code, headers=headers)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 491, in make_response
+    resp = self.representations[mediatype](data, *args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/representations/json.py", line 21, in output_json
+    dumped = dumps(data, **settings) + "\n"
+  File "/usr/lib/python3.6/json/__init__.py", line 231, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/lib/python3.6/json/encoder.py", line 199, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/lib/python3.6/json/encoder.py", line 257, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/lib/python3.6/json/encoder.py", line 180, in default
+    o.__class__.__name__)
+TypeError: Object of type 'Decimal' is not JSON serializable
+[2020-01-02 19:43:09,831] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 78, in get
+    'id' : product_sale.id,
+AttributeError: 'result' object has no attribute 'id'
+[2020-01-02 19:46:16,436] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 78, in get
+    'name' : product_sale.name,
+AttributeError: 'result' object has no attribute 'name'
+[2020-01-02 19:47:03,785] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 38, in get
+    product_sales = Products.query(func.sum(SaleDetails.qty).label('total_sold_qty')).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id)
+TypeError: 'BaseQuery' object is not callable
+[2020-01-02 19:56:04,960] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 38, in get
+    product_sales = db.session.query(Products.columns, func.sum(SaleDetails.qty).label('total_sold_qty')).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id)
+AttributeError: type object 'Products' has no attribute 'columns'
+[2020-01-02 19:56:23,845] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+Traceback (most recent call last):
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
+    resp = resource(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
+    return self.dispatch_request(*args, **kwargs)
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
+    resp = meth(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 38, in get
+    product_sales = db.session.query(Products.column, func.sum(SaleDetails.qty).label('total_sold_qty')).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id)
+AttributeError: type object 'Products' has no attribute 'column'

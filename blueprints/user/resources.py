@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_restful import Api, reqparse, Resource, marshal, inputs
-from sqlalchemy import desc
+from sqlalchemy import desc, or_, func
 import datetime, hashlib
 
 from .model import Users
@@ -34,9 +34,9 @@ class UserResource(Resource):
         claims = get_jwt_claims()
         get_user_from_token = Users.query.filter_by(user_name=claims['user_name']).first()
 
-        if get_user_from_token.id == id:
-            user = Users.query.get(id)            
-            return marshal(user, Users.response_fields), 200
+        if get_user_from_token.id == int(id):
+            # user = Users.query.get(id)            
+            return marshal(get_user_from_token, Users.response_fields), 200
         else:
             #IDENTITAS TOKEN DAN ID PARAMS TIDAK MATCH
             return {'message': 'Trying to Access/Update data by Unauthorized user'}, 400, {'Content Type':'application/json'}
@@ -55,14 +55,17 @@ class UserResource(Resource):
         parser.add_argument('email', location='json', required=True)
         parser.add_argument('the_password', location='json', required=True)
         args = parser.parse_args()
+        
+        user_name = args['user_name']
+        email = args['email'].lower()
 
         validation = policy.test(args['the_password'])
         
         if validation == []:
-            user_is_exist = Users.query.filter(or_(Users.user_name==args['user_name'], Users.email==args['email']))
+            user_is_exist = Users.query.filter(or_(Users.user_name==user_name, Users.email==email)).first()
             if user_is_exist is None:
                 password_digest = hashlib.md5(args['the_password'].encode()).hexdigest()
-                user = Users(args['user_name'], args['email'], password_digest, False, False)
+                user = Users(user_name, email, password_digest, False, False)
                 db.session.add(user)
                 db.session.commit()
 
@@ -70,10 +73,11 @@ class UserResource(Resource):
                 #DARI API PEMBUATAN TOKEN JIKA BERHASIL LANGSUNG DIARAHKAN KE HOME PAGE
                 return marshal(user, Users.response_fields), 200, {'Content Type':'application/json'}
             else:
-                return {'message': 'Username or Email already registered', 'result': validation}, 400, {'Content Type':'application/json'}
+                print('USERNAME EMAIL ADAAAA')
+                return {'message': 'Username or Email already registered'}, 400, {'Content Type':'application/json'}
                 
         else:
-            return {'message': 'password does not fill requirements', 'result': validation}, 400, {'Content Type':'application/json'}
+            return {'message': 'password does not fill requirements'}, 400, {'Content Type':'application/json'}
 
 
 
@@ -84,7 +88,7 @@ class UserResource(Resource):
 
         get_user_from_token = Users.query.filter_by(user_name=claims['user_name']).first()
 
-        if get_user_from_token.id == id:
+        if get_user_from_token.id == int(id):
             policy = PasswordPolicy.from_names(
                 length = 8,
                 uppercase = 1,
@@ -112,11 +116,11 @@ class UserResource(Resource):
             if args['password_changed'] == True:
                 validation = policy.test(args['new_password'])
                 if validation == []:
-                    user = Users.query.get(id)
+                    # user = Users.query.get(id)
                     password_digest = hashlib.md5(args['new_password'].encode()).hexdigest()
-                    user.the_password = password_digest
+                    get_user_from_token.the_password = password_digest
                 else:
-                    return {'message': 'password does not fill requirements', 'result': validation}, 400, {'Content Type':'application/json'}
+                    return {'message': 'password does not fill requirements'}, 400, {'Content Type':'application/json'}
 
             
 
@@ -159,11 +163,11 @@ class UserResource(Resource):
 
             
 
-            user = Users.query.get(id)
+            # user = Users.query.get(id)
             user_profile = UserProfiles.query.filter_by(user_id=int(id)).first()
 
             if user_profile is None:
-                user_profile = UserProfiles(user.id, full_name, sex, birth_place, birth_date, phone_no, address, city, province, bio, url_img)
+                user_profile = UserProfiles(get_user_from_token.id, full_name, sex, birth_place, birth_date, phone_no, address, city, province, bio, url_img)
                 db.session.add(user_profile)
                 db.session.commit()
 

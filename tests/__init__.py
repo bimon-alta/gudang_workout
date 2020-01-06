@@ -5,22 +5,19 @@ from blueprints import db, app
 from blueprints.user.model import Users
 from blueprints.product_category.model import ProductCategories
 from blueprints.bank_account.model import BankAccounts
+import json,hashlib
 
 
 #drop dan reset database
 def reset_db():
     db.drop_all()
     db.create_all()
-
-    #ketika unit test melakukan reset db dan membutuhkan inisialisasi data awal 
-    #di beberapa tabel lakukan spt di bawah:
-    #1 User admin, 1 user merchant, 1 user biasa (buyer)
-    (self, user_name, email, the_password, is_admin, is_merchant):
-    user_admin = Users("admin", "admin@gudangworkout.com", "Asdf1234", True, True)
+    
+    user_admin = Users("admin", "admin@gudangworkout.com", hashlib.md5("Asdf1234".encode()).hexdigest(), True, True)
     db.session.add(user_admin)
-    user_seller = Users("penjual01", "budi@gmail.com", "Budi1234", False, True)
+    user_seller = Users("penjual01", "budi@gmail.com", hashlib.md5("Budi1234".encode()).hexdigest(), False, True)
     db.session.add(user_seller)
-    user_regular = Users("pembeli01", "susi@gmail.com", "Susi1234", False, False)
+    user_regular = Users("pembeli01", "susi@gmail.com", hashlib.md5("Susi1234".encode()).hexdigest(), False, False)
     db.session.add(user_regular)
 
     #2 ProductCategories
@@ -32,7 +29,6 @@ def reset_db():
     db.session.add(prod_category3)
 
     #3 Bank Accounts
-    (self, bank_name, account_name, account_no)
     bank1 = BankAccounts("BCA", "Djohn Dalton", "123-456-789-11")
     db.session.add(bank1)
     bank2 = BankAccounts("MANDIRI", "Widya Dewi", "987-654-321-01")
@@ -63,7 +59,7 @@ def test_login_admin():
 
     if token is None:
         req = call_client(request)          
-        res = req.post('/login', query_string=data)
+        res = req.post('/login', json=data)
 
         res_json = json.loads(res.data)
 
@@ -79,7 +75,7 @@ def test_login_admin():
         return token
 
 def test_login_penjual():
-
+    
     cachename = 'test-penjual-token'
     data = {
         'user_name': 'penjual01',
@@ -90,7 +86,7 @@ def test_login_penjual():
 
     if token is None:
         req = call_client(request)          
-        res = req.post('/login', query_string=data)
+        res = req.post('/login', json=data)
 
         res_json = json.loads(res.data)
 
@@ -106,7 +102,7 @@ def test_login_penjual():
         return token
 
 def test_login_pembeli():
-
+    
     cachename = 'test-pembeli-token'
     data = {
         'user_name': 'pembeli01',
@@ -117,7 +113,7 @@ def test_login_pembeli():
 
     if token is None:
         req = call_client(request)          
-        res = req.post('/login', query_string=data)
+        res = req.post('/login', json=data)
 
         res_json = json.loads(res.data)
 
@@ -131,3 +127,5 @@ def test_login_pembeli():
 
     else:
         return token
+
+reset_db()
