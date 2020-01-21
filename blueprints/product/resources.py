@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask_restful import Api, reqparse, Resource, marshal, inputs
-from sqlalchemy import desc, func
+from sqlalchemy import desc, func,  or_
 import datetime
 
 from .model import Products
@@ -34,23 +34,35 @@ class ProductList(Resource):
         indeks_mulai = (int(args['p']) * int(args['rp'])) - int(args['rp'])
 
 
+        #QUERY PRODUCT LIST DENGAN JOIN SALE DETAILS (HARUSNYA LEFT JOIN), 
+        #UTK DAPETING PRODUK YG DIURUTKAN DENGAN PENJUALAN TERLARIS
+        # product_sales = db.session.query(Products, func.sum(SaleDetails.qty).label('total_sold_qty')).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id)
 
-        product_sales = db.session.query(Products, func.sum(SaleDetails.qty).label('total_sold_qty')).filter(Products.deleted==False).join(SaleDetails).group_by(Products.id)
         # for product_sale in product_sales:
         #     print(product_sale.Products.name)
+        
+        product_sales = Products.query.filter_by(deleted=False)
 
 
         if args['category_id'] != None:
+            # print(args['category_id'])
             product_sales = product_sales.filter(Products.category_id==int(args['category_id']))
 
         #query untuk pencarian ada di sini
         if args['search_keyword'] != None:
+            # print(args['search_keyword'])
             # db.users.filter(or_(db.users.name=='Ryan', db.users.country=='England'))
-            product_sales = product_sales.filter(or_(ProductCategories.name.like("%"+args['search_keyword']+"%"), ProductCategories.short_description.like("%"+args['search_keyword']+"%")))
- 
+            product_sales = product_sales.filter(or_(Products.name.\
+              like("%"+args['search_keyword']+"%"), Products.\
+                short_description.like("%"+args['search_keyword']+"%")))
+
 
         #sementara diurutkan hanya berdasarkan produk dibuat (terbaru/lama)
         if args['orderby'] is not None:
+            # print(args['orderby'])
+            # print(args['sort'])
+
+
             #diurutkan produk terbaru (diinput)
             if args['orderby'] == 'created_at':
                 product_sales = product_sales.order_by(desc(Products.created_at))
@@ -76,6 +88,76 @@ class ProductList(Resource):
 
         # print(product_sales[1].name)
         for product_sale in product_sales.limit(int(args['rp'])).offset(indeks_mulai).all():
+            
+
+            #UNTUK QUERY JOIN PRODUK TERLARIS          
+            # product_data = {
+            #     'id' : product_sale.Products.id,
+            #     'name' : product_sale.Products.name,
+            #     'merchant_id' : product_sale.Products.merchant_id,
+            #     'category_id' : product_sale.Products.category_id,
+            #     'default_price' : product_sale.Products.default_price,
+            #     'brand_name' : product_sale.Products.brand_name,
+            #     'country_of_origin' : product_sale.Products.country_of_origin,
+            #     'url_img1' : product_sale.Products.url_img1,
+            #     'url_img2' : product_sale.Products.url_img2,
+            #     'url_img3' : product_sale.Products.url_img3,
+            #     'condition' : product_sale.Products.condition,
+            #     'weight_gram' : product_sale.Products.weight_gram,
+            #     'short_description' : product_sale.Products.short_description,
+            #     'detail_product' : product_sale.Products.detail_product,
+            #     'is_available' : product_sale.Products.is_available,
+            #     'total_sold_qty': int(product_sale.total_sold_qty)
+            # }
+            # results.append(product_data)
+
+            results.append(marshal(product_sale, Products.response_fields))
+
+        return results, 200
+
+
+class ProductTopSaleList(Resource):
+    def __init__(self):
+        pass
+
+    def get(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('p', type=int, location='args', default=1)
+        parser.add_argument('rp', type=int, location='args', default=20)
+        args = parser.parse_args()
+
+        indeks_mulai = (int(args['p']) * int(args['rp'])) - int(args['rp'])
+
+
+        #QUERY PRODUCT LIST DENGAN JOIN SALE DETAILS (HARUSNYA LEFT JOIN), 
+        #UTK DAPETIN PRODUK YG DIURUTKAN DENGAN PENJUALAN TERLARIS
+        product_sales = db.session.query(Products, func.sum(SaleDetails.qty).\
+          label('total_sold_qty')).filter(Products.deleted==False).\
+            join(SaleDetails).group_by(Products.id)
+
+        # for product in product_sales:
+        #   print(product.total_sold_qty)
+          # print(product_sales.
+        #SORTING GAGAAAALLLLL BOSSSSS
+        # product_sales = product_sales.order_by(desc(total_sold_qty))  
+        # print(product_sales)
+
+        # for product_sale in product_sales:
+        #     print(product_sale.Products.name)
+                
+
+
+        results = []
+        # for product_sale in product_sales.limit(int(args['rp'])).offset(indeks_mulai).all():
+            # results.append(marshal(product_sale, Products.join_sale_fields))
+        # for product_sale in product_sales.all():
+        #     results.append(marshal(product_sale, Products.join_sale_fields))
+
+        # print(product_sales[1].name)
+        for product_sale in product_sales.limit(int(args['rp'])).offset(indeks_mulai).all():
+            
+
+            #UNTUK QUERY JOIN PRODUK TERLARIS          
             product_data = {
                 'id' : product_sale.Products.id,
                 'name' : product_sale.Products.name,
@@ -94,12 +176,12 @@ class ProductList(Resource):
                 'is_available' : product_sale.Products.is_available,
                 'total_sold_qty': int(product_sale.total_sold_qty)
             }
-
             results.append(product_data)
+
 
         return results, 200
 
-
+    
 class ProductResource(Resource):
     def __init__(self):
         pass
@@ -113,4 +195,5 @@ class ProductResource(Resource):
 
 api.add_resource(ProductList,'')
 api.add_resource(ProductResource, '/<id>')   
+api.add_resource(ProductTopSaleList, '/top-sale')   
 

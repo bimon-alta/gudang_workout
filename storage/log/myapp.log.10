@@ -1,4 +1,7 @@
-[2020-01-02 17:57:35,394] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
+[2020-01-18 10:41:24,435] {/home/alta15/flask/gudangworkout/blueprints/__init__.py:96} INFO - REQUEST_LOG	{"status_code": 200, "method": "GET", "code": "200 OK", "uri": "/product?p=1&rp=20&search_keyword=calis&orderby=created_at&sort=desc", "request": {"p": "1", "rp": "20", "search_keyword": "calis", "orderby": "created_at", "sort": "desc"}, "response": [{"id": 11, "name": "Baju Calisthenic Armsstrong", "merchant_id": 2, "category_id": 3, "default_price": 150000, "brand_name": "Armsstrong", "country_of_origin": "Indonesia", "url_img1": "https://ritelbox.com/image/cache/wkseller/42/TRIJEE/WhatsApp%20Image%202019-06-26%20at%2015.09.16-550x550w.jpeg", "url_img2": "https://ritelbox.com/image/cache/wkseller/42/TRIJEE/WhatsApp%20Image%202019-06-26%20at%2015.09.16-550x550w.jpeg", "url_img3": "https://ritelbox.com/image/cache/wkseller/42/TRIJEE/WhatsApp%20Image%202019-06-26%20at%2015.09.16-550x550w.jpeg", "condition": "baru", "weight_gram": 100, "short_description": "Baju super keren dari distron Armsstrong Calisthenics", "detail_product": "Warna putih dan hitam", "is_available": true, "created_at": "Thu, 02 Jan 2020 12:04:05 -0000", "updated_at": null, "deleted": false}]}
+[2020-01-18 10:41:29,971] {/home/alta15/flask/gudangworkout/blueprints/__init__.py:96} INFO - REQUEST_LOG	{"status_code": 200, "method": "GET", "code": "200 OK", "uri": "/product/11?", "request": {}, "response": [{"id": 11, "name": "Baju Calisthenic Armsstrong", "merchant_id": 2, "category_id": 3, "default_price": 150000, "brand_name": "Armsstrong", "country_of_origin": "Indonesia", "url_img1": "https://ritelbox.com/image/cache/wkseller/42/TRIJEE/WhatsApp%20Image%202019-06-26%20at%2015.09.16-550x550w.jpeg", "url_img2": "https://ritelbox.com/image/cache/wkseller/42/TRIJEE/WhatsApp%20Image%202019-06-26%20at%2015.09.16-550x550w.jpeg", "url_img3": "https://ritelbox.com/image/cache/wkseller/42/TRIJEE/WhatsApp%20Image%202019-06-26%20at%2015.09.16-550x550w.jpeg", "condition": "baru", "weight_gram": 100, "short_description": "Baju super keren dari distron Armsstrong Calisthenics", "detail_product": "Warna putih dan hitam", "is_available": true, "created_at": "Thu, 02 Jan 2020 12:04:05 -0000", "updated_at": null, "deleted": false}]}
+[2020-01-18 10:42:48,191] {/home/alta15/flask/gudangworkout/blueprints/__init__.py:96} INFO - REQUEST_LOG	{"status_code": 200, "method": "GET", "code": "200 OK", "uri": "/cart?", "request": {}, "response": {"sale": [{"id": 3, "user_id": 8, "total_bill": 6789000, "is_paid": false, "created_at": "Tue, 14 Jan 2020 22:53:19 -0000", "updated_at": "Sat, 18 Jan 2020 10:30:17 -0000", "deleted": false}], "sale_detail": [{"item_sale": {"id": 4, "sale_id": 3, "product_id": 8, "qty": 2, "price_on_sale": 100000, "discount_amount": 0, "total_shipping_fee": 280000, "total": 480000, "is_shipped": false, "created_at": "Tue, 14 Jan 2020 22:53:19 -0000", "updated_at": "Fri, 17 Jan 2020 17:59:58 -0000", "deleted": false}, "item_info": {"name": "Dumbbell/Barbel Set 7kg", "category_id": 5, "url_img1": "https://www.jakartanotebook.com/images/products/74/63/16746/4/children-plastic-toys-dumbbell-fitness-or-barbel-plastik-red-3.jpg"}}, {"item_sale": {"id": 5, "sale_id": 3, "product_id": 5, "qty": 3, "price_on_sale": 795000, "discount_amount": 0, "total_shipping_fee": 24000, "total": 2409000, "is_shipped": false, "created_at": "Tue, 14 Jan 2020 22:53:52 -0000", "updated_at": "Fri, 17 Jan 2020 17:59:58 -0000", "deleted": false}, "item_info": {"name": "Sepatu lari Reebook Go", "category_id": 3, "url_img1": "https://cf.shopee.co.id/file/04065260fff1331de966b11257cd2308"}}, {"item_sale": {"id": 6, "sale_id": 3, "product_id": 10, "qty": 2, "price_on_sale": 50000, "discount_amount": 0, "total_shipping_fee": 0, "total": 100000, "is_shipped": false, "created_at": "Tue, 14 Jan 2020 23:11:57 -0000", "updated_at": "Tue, 14 Jan 2020 22:46:19 -0000", "deleted": false}, "item_info": {"name": "Jasa privat trainer", "category_id": 6, "url_img1": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtWBKGNeuWXyT3We_PR8XEY1TR5vEPVrtMtGWY641GBtIwegxcOg&s"}}, {"item_sale": {"id": 7, "sale_id": 3, "product_id": 1, "qty": 2, "price_on_sale": 1500000, "discount_amount": 0, "total_shipping_fee": 0, "total": 3000000, "is_shipped": false, "created_at": "Thu, 16 Jan 2020 20:37:22 -0000", "updated_at": "Thu, 16 Jan 2020 16:30:55 -0000", "deleted": false}, "item_info": {"name": "Garmin Sportwear", "category_id": 1, "url_img1": "https://www.watch-studio.com/images/detailed/100/cf-lg-55acdb3b-4616-4672-a1f1-659455ca2496.jpg"}}, {"item_sale": {"id": 8, "sale_id": 3, "product_id": 14, "qty": 3, "price_on_sale": 150000, "discount_amount": 0, "total_shipping_fee": 0, "total": 450000, "is_shipped": false, "created_at": "Thu, 16 Jan 2020 20:40:45 -0000", "updated_at": "Thu, 16 Jan 2020 16:30:55 -0000", "deleted": false}, "item_info": {"name": "Tali Skipping", "category_id": 1, "url_img1": "https://www.jakartanotebook.com/images/products/80/63/18271/6/jump-rope-skipping-counting-rope-or-tali-skipping-blue-89.JPG"}}, {"item_sale": {"id": 9, "sale_id": 3, "product_id": 6, "qty": 1, "price_on_sale": 200000, "discount_amount": 0, "total_shipping_fee": 0, "total": 200000, "is_shipped": false, "created_at": "Fri, 17 Jan 2020 16:17:47 -0000", "updated_at": null, "deleted": false}, "item_info": {"name": "Resistance Band Kettler", "category_id": 4, "url_img1": "https://www.bigw.com.au/medias/sys_master/images/images/h64/h76/12251158282270.jpg"}}, {"item_sale": {"id": 10, "sale_id": 3, "product_id": 11, "qty": 1, "price_on_sale": 150000, "discount_amount": 0, "total_shipping_fee": 0, "total": 150000, "is_shipped": false, "created_at": "Sat, 18 Jan 2020 10:42:25 -0000", "updated_at": null, "deleted": false}, "item_info": {"name": "Baju Calisthenic Armsstrong", "category_id": 3, "url_img1": "https://ritelbox.com/image/cache/wkseller/42/TRIJEE/WhatsApp%20Image%202019-06-26%20at%2015.09.16-550x550w.jpeg"}}]}}
+[2020-01-18 10:43:55,297] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /shipping-address/10 [POST]
 Traceback (most recent call last):
   File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
     rv = self.dispatch_request()
@@ -10,62 +13,10 @@ Traceback (most recent call last):
     return self.dispatch_request(*args, **kwargs)
   File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
     resp = meth(*args, **kwargs)
-  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 93, in get
-    for row in products.limit(int(args['rp'])).offset(indeks_mulai).all():
-UnboundLocalError: local variable 'products' referenced before assignment
-[2020-01-02 17:58:29,881] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
-Traceback (most recent call last):
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 93, in get
-    for row in products.limit(int(args['rp'])).offset(indeks_mulai).all():
-UnboundLocalError: local variable 'products' referenced before assignment
-[2020-01-02 17:59:13,545] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
-Traceback (most recent call last):
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 58, in get
-    product_sales = db.session.query(Products.id,Products.name).filter(Products.deleted==False).join(SaleDetails, SaleDetails.qty, SaleDetails.total).all()
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 2268, in join
-    from_joinpoint=from_joinpoint,
-  File "<string>", line 2, in _join
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/base.py", line 220, in generate
-    fn(self, *args[1:], **kw)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/orm/query.py", line 2401, in _join
-    right = onclause.property.entity
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 949, in __getattr__
-    return self._fallback_getattr(key)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/sqlalchemy/util/langhelpers.py", line 923, in _fallback_getattr
-    raise AttributeError(key)
-AttributeError: entity
-[2020-01-02 17:59:44,985] {/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py:1891} ERROR - Exception on /product [GET]
-Traceback (most recent call last):
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1949, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/app.py", line 1935, in dispatch_request
-    return self.view_functions[rule.endpoint](**req.view_args)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 458, in wrapper
-    resp = resource(*args, **kwargs)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask/views.py", line 89, in view
-    return self.dispatch_request(*args, **kwargs)
-  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_restful/__init__.py", line 573, in dispatch_request
-    resp = meth(*args, **kwargs)
-  File "/home/alta15/flask/gudangworkout/blueprints/product/resources.py", line 93, in get
-    for row in products.limit(int(args['rp'])).offset(indeks_mulai).all():
-UnboundLocalError: local variable 'products' referenced before assignment
+  File "/home/alta15/virenv/flask_virenv/lib/python3.6/site-packages/flask_jwt_extended/view_decorators.py", line 108, in wrapper
+    return fn(*args, **kwargs)
+  File "/home/alta15/flask/gudangworkout/blueprints/shipping_address/resources.py", line 101, in post
+    hasil = self.GetShippingFee(merchant_city, city, total_weight_gram)
+  File "/home/alta15/flask/gudangworkout/blueprints/shipping_address/resources.py", line 52, in GetShippingFee
+    shipping_fee = result['rajaongkir']['results'][0]['costs'][1]['cost'][0]['value']
+IndexError: list index out of range

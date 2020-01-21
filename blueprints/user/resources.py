@@ -71,9 +71,9 @@ class UserResource(Resource):
 
                 #PROSES RETURN HARUSNYA MENGEMBALIKAN PROSES UTK REDIRECT KE API PEMBUATAN TOKEN
                 #DARI API PEMBUATAN TOKEN JIKA BERHASIL LANGSUNG DIARAHKAN KE HOME PAGE
-                return marshal(user, Users.response_fields), 200, {'Content Type':'application/json'}
+                return {'result': marshal(user, Users.response_fields)}, 200, {'Content Type':'application/json'}
             else:
-                print('USERNAME EMAIL ADAAAA')
+                # print('USERNAME EMAIL ADAAAA')
                 return {'message': 'Username or Email already registered'}, 400, {'Content Type':'application/json'}
                 
         else:

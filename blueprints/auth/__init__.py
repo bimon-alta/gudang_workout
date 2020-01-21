@@ -2,6 +2,7 @@ from flask import Blueprint
 from flask_restful import Api, Resource, reqparse, marshal
 
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required, get_jwt_claims
+from sqlalchemy import desc, or_, func
 
 from ..user.model import Users
 from blueprints import admin_required
@@ -15,7 +16,9 @@ api = Api(bp_auth)
 ##  RESOURCE  ###
 
 class CreateTokenResource(Resource):
-    
+    def options(self,id=None):
+      return {'status':'OK'}, 200
+      
     def post(self):
         ## CreateToken
         parser = reqparse.RequestParser()
@@ -25,16 +28,31 @@ class CreateTokenResource(Resource):
 
         
         password_digest = hashlib.md5(args['the_password'].encode()).hexdigest()
-        qry = Users.query.filter_by(user_name=args['user_name']).filter_by(the_password=password_digest)
+        qry = Users.query.filter(or_(Users.user_name==args['user_name'], Users.email==args['user_name'])).filter(Users.the_password==password_digest)
         userData = qry.first()
 
         if userData is not None:
+            user_id = userData.id
+            email = userData.email
+            is_admin = userData.is_admin
+            is_merchant = userData.is_merchant
+
             userData = marshal(userData, Users.jwt_claims_fields)
             token = create_access_token(identity=args['user_name'], user_claims=userData)
+            
+
 
             #setelah token berhasil dibuat, info ke react utk simpan token, 
             #halaman bisa tetap di terakhir yg diakses atau gampangnya diarahkan ke home
-            return {'token' : token}, 200
+            return {
+              'result':{
+                'id': user_id,
+                'email': email,
+                'is_admin': is_admin,
+                'is_merchant': is_merchant,
+                'token' : token
+              }
+            }, 200
             
         else:
             return {'status': 'UNATUTHORIZED', 'message': 'invalid username or password'}, 401

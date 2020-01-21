@@ -6,6 +6,12 @@ import logging , sys
 from logging.handlers import RotatingFileHandler 
 from werkzeug.contrib.cache import SimpleCache
 
+from flask_cors import CORS
+
+
+CORS(app)
+
+
 cache = SimpleCache()
 
 

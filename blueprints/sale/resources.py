@@ -80,7 +80,7 @@ class SaleResource(Resource):
             db.session.commit()
 
             cart = Sales.query.filter_by(user_id=user.id).first()
-            new_item = SaleDetails(cart.id, product_id, qty, price_on_sale, discount_amount, 0, total,False)
+            new_item = SaleDetails(cart.id, product_id, 1, price_on_sale, discount_amount, 0, total,False)
             db.session.add(new_item)
             db.session.commit()
 
@@ -89,7 +89,7 @@ class SaleResource(Resource):
         else:
             item = SaleDetails.query.filter_by(sale_id=cart.id).filter_by(product_id=product_id).first()
             if item is None:
-                new_item = SaleDetails(cart.id, product_id, qty, price_on_sale, discount_amount, 0, total,False)
+                new_item = SaleDetails(cart.id, product_id, 1, price_on_sale, discount_amount, 0, total,False)
                 db.session.add(new_item)
 
                 cart.total_bill += total

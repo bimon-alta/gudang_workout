@@ -122,7 +122,8 @@ from blueprints.product.resources import bp_product
 from blueprints.sale.resources import bp_sale
 from blueprints.shipping_address.resources import bp_item_shipping_address
 from blueprints.payment.resources import bp_payment
-
+from blueprints.product_category.resources import bp_category
+from blueprints.bank_account.resources import bp_bank_account
 
 # from blueprints.weather import bp_weather
 
@@ -135,6 +136,9 @@ app.register_blueprint(bp_product,url_prefix='/product')
 app.register_blueprint(bp_sale,url_prefix='/cart')
 app.register_blueprint(bp_item_shipping_address,url_prefix='/shipping-address')
 app.register_blueprint(bp_payment,url_prefix='/payment')
+app.register_blueprint(bp_category,url_prefix='/product-category')
+app.register_blueprint(bp_bank_account,url_prefix='/bank-accounts')
+
 
 
 # app.register_blueprint(bp_weather, url_prefix='/weather')
