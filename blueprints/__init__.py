@@ -47,9 +47,9 @@ app.config['APP_DEBUG'] = True
 try:
     env = os.environ.get('FLASK_ENV', 'development')
     if env == 'testing':
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db_testing'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:asdf1234@gudangworkout.cfmhke3xl3iz.ap-southeast-1.rds.amazonaws.com:3306/gudangworkouttesting'
     else:
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:@127.0.0.1:3306/gudang_workout_db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:asdf1234@gudangworkout.cfmhke3xl3iz.ap-southeast-1.rds.amazonaws.com:3306/gudangworkout'
 
 except Exception as e:
     raise e
