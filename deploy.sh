@@ -10,4 +10,4 @@ echo "$DOCKERHUB_PASS" | docker login --username $DOCKERHUB_USER --password-stdi
 docker stop gudangworkout2
 docker rm gudangworkout2
 docker rmi bimonalta/gudang_workout:be2
-docker run -d --name gudangworkout2 -p 5000:5000 bimonalta/gudang_workout:latest
+docker run -d --name gudangworkout2 -p 5000:5000 bimonalta/gudang_workout:be2
