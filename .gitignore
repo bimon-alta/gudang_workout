@@ -162,3 +162,6 @@ dmypy.json
 # End of https://www.gitignore.io/api/flask,python
 
 __pycache__
+
+deploy.rsa.pub
+deploy.rsa
